@@ -1,12 +1,23 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Categories</ion-title>
+    <ion-title>Категории</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content>
+<form [formGroup]="categoryData" (ngSubmit)="openCategory()">
+  <ion-list>
+    <ion-item>
+      <ion-label>Избери категория...</ion-label>
+      <ion-select formControlName="category">
+        <ion-option value="{{category.id}}" *ngFor="let category of categories">{{category.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
 
-  content
-
+      <div padding>
+          <button ion-button color="purple" block type="submit">отвори</button>
+      </div>
+</form>
 </ion-content>

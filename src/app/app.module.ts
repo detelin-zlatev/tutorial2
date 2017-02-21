@@ -5,6 +5,7 @@ import { CategoriesPage } from '../pages/categories/categories';
 import { CategoryPage } from '../pages/category/category';
 import { ProductPage } from '../pages/product/product';
 import { OrderPage } from '../pages/order/order';
+import { PasswordPage } from '../pages/password/password';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { OrderPage } from '../pages/order/order';
     CategoriesPage,
     CategoryPage,
     ProductPage,
-    OrderPage
+    OrderPage,
+    PasswordPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -23,7 +25,8 @@ import { OrderPage } from '../pages/order/order';
     CategoriesPage,
     CategoryPage,
     ProductPage,
-    OrderPage
+    OrderPage,
+    PasswordPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
