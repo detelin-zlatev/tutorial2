@@ -39,8 +39,8 @@ export class CategoriesPage {
     	   categoryId: this.categoryData.controls['category'].value
     	});
     } else {
-	let passPopover = this.popoverCtrl.create(PasswordPage);
-	passPopover.present();
+      let passPopover = this.popoverCtrl.create(PasswordPage, {id: this.categoryData.controls['category'].value});
+      passPopover.present();
     }
   }
 

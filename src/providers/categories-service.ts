@@ -39,12 +39,12 @@ export class CategoriesService {
 	    }
 
 	    return new Promise(resolve => {
-		let headers = new Headers({ 'Accept': 'application/json' });
+		let headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
 
 		let body = JSON.stringify({
           		id: id,
-			password: password
+			    password: password
         	});
 
         	console.log(body);
