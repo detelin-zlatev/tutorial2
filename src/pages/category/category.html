@@ -1,12 +1,29 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>Category</ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-content>
+  <div padding>
+    <button ion-button color="purple" block (click)="goToHome()" icon-left><ion-icon name='arrow-back'></ion-icon> Избор на категория</button>
+  </div>
+  <ion-row *ngFor="let product of products; let even=even; let index=index;" padding>
+  	<ion-col width-50 *ngIf="even" (click)="goToProduct(product)">
+		<img src="{{imagesPath}}{{product.filepath}}"/>
+	</ion-col>
+  	<ion-col width-50 *ngIf="even && index < products.length - 1" (click)="goToProduct(products[index + 1])">
+		<img src="{{imagesPath}}{{products[index + 1].filepath}}"/>
+	</ion-col>
+  </ion-row>
 
 
-<ion-content padding>
+   <ion-card [hidden]="!products || products.length > 0">
+	  <ion-card-content>
+	    <ion-card-title>
+	      0 продукта
+	    </ion-card-title>
+	    <p>
+	      Няма продукти в избраната категория.
+	    </p>
+	  </ion-card-content>
+   </ion-card>
 
-  Category
-
+   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+	<ion-infinite-scroll-content></ion-infinite-scroll-content>
+   </ion-infinite-scroll>
 </ion-content>

@@ -1,10 +1,40 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Product</ion-title>
+    <ion-title>Подробности за продукт</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-	Product
+	<img src="{{imagesPath}}{{product.filepath}}"/>
+
+	<div no-padding>
+    		<button ion-button color="purple" block (click)="doOrder()" icon-left><ion-icon name='basket'></ion-icon>Поръчай</button>
+  	</div>
+	<form [formGroup]="orderData" (ngSubmit)="completeOrder()" *ngIf="order"> 
+	      <ion-item>
+		<ion-label>Подробности за поръчката</ion-label>
+		<ion-textarea rows="3" formControlName="orderText"></ion-textarea>
+	      </ion-item>
+
+	      <ion-item *ngIf="finishOrder">
+		<ion-label>Име</ion-label>
+		<ion-input type="text" formControlName="orderName"></ion-input>
+	      </ion-item>
+
+              <ion-item *ngIf="finishOrder">
+		<ion-label>Телефон</ion-label>
+		<ion-input type="text" formControlName="orderPhone"></ion-input>
+	      </ion-item>
+		
+              <div no-padding *ngIf="!finishOrder && order">
+		  <button ion-button block type="submit">Добави продукт</button>
+	      </div>
+	      <div no-padding *ngIf="!finishOrder && order">
+		  <button ion-button block (click)="doFinish()">Приключи поръчката</button>
+	      </div>
+              <div no-padding *ngIf="finishOrder">
+		  <button ion-button block type="submit">Изпрати</button>
+	      </div>
+      </form>
 </ion-content>

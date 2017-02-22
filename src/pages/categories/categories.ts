@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavController, PopoverController } from 'ionic-angular';
+import { NavController, PopoverController, LoadingController  } from 'ionic-angular';
 
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
@@ -15,7 +15,7 @@ import {CategoriesService} from '../../providers/categories-service';
   providers: [CategoriesService]
 })
 export class CategoriesPage {
-  constructor(public navCtrl: NavController, public categoriesService: CategoriesService, private formBuilder: FormBuilder, public popoverCtrl: PopoverController) {
+  constructor(public navCtrl: NavController, public categoriesService: CategoriesService, private formBuilder: FormBuilder, public popoverCtrl: PopoverController, public loadingController: LoadingController ) {
 	this.categoryData = this.formBuilder.group({
 		category: ['', Validators.required]
 	      });
@@ -45,9 +45,13 @@ export class CategoriesPage {
   }
 
   loadCategories() {
+      let loader = this.loadingController.create({
+	      content: "Зарежда..."
+	    });
       this.categoriesService.all()
       .then(data => {
         this.categories = data.categories;  
+	loader.dismiss();
       });
   }
 }

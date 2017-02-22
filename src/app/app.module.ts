@@ -1,5 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import { MyApp } from './app.component';
 import { CategoriesPage } from '../pages/categories/categories';
 import { CategoryPage } from '../pages/category/category';
@@ -28,6 +29,6 @@ import { PasswordPage } from '../pages/password/password';
     OrderPage,
     PasswordPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Storage]
 })
 export class AppModule {}

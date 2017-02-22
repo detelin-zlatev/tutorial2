@@ -9,6 +9,7 @@ export class CategoriesService {
 
   public categories: any;
   public category: any;
+  public products: any;
 
   constructor(public http: Http) {
     console.log('CategoriesService Provider');
@@ -58,5 +59,32 @@ export class CategoriesService {
             	});
 	});
     }
+
+    listProducts(category_id: number, page: number, size: number) {
+    
+	    if (this.products) {
+		return Promise.resolve(this.products);
+	    }
+
+	    return new Promise(resolve => {
+		let headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers });
+
+		let body = JSON.stringify({
+		    category_id: category_id,
+		    page: page,
+		    size: size
+		});
+
+		console.log(body);
+
+		this.http.post(AppSettings.API_ENDPOINT + 'products/listPaged' , body, options)
+		    .map(res => res.json())
+		    .subscribe(data => {
+		      this.products = data;
+		      resolve(this.products);
+		    });
+	    });
+	}
 
 }

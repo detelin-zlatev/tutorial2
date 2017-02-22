@@ -18,6 +18,8 @@ import {CategoriesService} from '../../providers/categories-service';
 export class PasswordPage {
   id: number;
   passwordData: FormGroup;
+  submitAttempt: boolean;
+  loginValid: boolean;
 
   constructor(private formBuilder: FormBuilder, public categoriesService: CategoriesService, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
 	    this.passwordData = this.formBuilder.group({
@@ -27,6 +29,8 @@ export class PasswordPage {
   }
 
   openCategory() {
+    this.submitAttempt = true;
+    this.loginValid = true;
     this.categoriesService.single(this.id, this.passwordData.controls['password'].value)
       .then(data => {
         if (data != null) {
@@ -34,7 +38,9 @@ export class PasswordPage {
             this.navCtrl.push(CategoryPage, {
               categoryId: this.id
             });
-        }
+        } else {
+		this.loginValid = false;	
+	}
       });
   }
 }
