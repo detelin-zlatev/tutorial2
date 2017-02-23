@@ -13,17 +13,17 @@
   	</div>
 	<form [formGroup]="orderData" (ngSubmit)="completeOrder()" *ngIf="order"> 
 	      <ion-item>
-		<ion-label>Подробности за поръчката</ion-label>
+		<ion-label stacked>Подробности за поръчката</ion-label>
 		<ion-textarea rows="3" formControlName="orderText"></ion-textarea>
 	      </ion-item>
 
 	      <ion-item *ngIf="finishOrder">
-		<ion-label>Име</ion-label>
+		<ion-label stacked>Име</ion-label>
 		<ion-input type="text" formControlName="orderName"></ion-input>
 	      </ion-item>
 
               <ion-item *ngIf="finishOrder">
-		<ion-label>Телефон</ion-label>
+		<ion-label stacked>Телефон</ion-label>
 		<ion-input type="text" formControlName="orderPhone"></ion-input>
 	      </ion-item>
 		
