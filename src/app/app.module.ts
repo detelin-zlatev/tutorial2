@@ -5,7 +5,7 @@ import { MyApp } from './app.component';
 import { CategoriesPage } from '../pages/categories/categories';
 import { CategoryPage } from '../pages/category/category';
 import { ProductPage } from '../pages/product/product';
-import { OrderPage } from '../pages/order/order';
+import { EmailPage } from '../pages/email/email';
 import { PasswordPage } from '../pages/password/password';
 
 @NgModule({
@@ -14,7 +14,7 @@ import { PasswordPage } from '../pages/password/password';
     CategoriesPage,
     CategoryPage,
     ProductPage,
-    OrderPage,
+    EmailPage,
     PasswordPage
   ],
   imports: [
@@ -26,7 +26,7 @@ import { PasswordPage } from '../pages/password/password';
     CategoriesPage,
     CategoryPage,
     ProductPage,
-    OrderPage,
+    EmailPage,
     PasswordPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Storage]

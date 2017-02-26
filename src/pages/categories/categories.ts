@@ -2,10 +2,13 @@ import { Component } from '@angular/core';
 
 import { NavController, PopoverController, LoadingController  } from 'ionic-angular';
 
+import { Storage } from '@ionic/storage';
+
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import {CategoryPage} from '../category/category';
 import {PasswordPage} from '../password/password';
+import {EmailPage} from '../email/email';
 
 import {CategoriesService} from '../../providers/categories-service';
 
@@ -15,11 +18,20 @@ import {CategoriesService} from '../../providers/categories-service';
   providers: [CategoriesService]
 })
 export class CategoriesPage {
-  constructor(public navCtrl: NavController, public categoriesService: CategoriesService, private formBuilder: FormBuilder, public popoverCtrl: PopoverController, public loadingController: LoadingController ) {
-	this.categoryData = this.formBuilder.group({
-		category: ['', Validators.required]
-	      });
-	this.loadCategories();
+  constructor(public storage: Storage, public navCtrl: NavController, public categoriesService: CategoriesService, private formBuilder: FormBuilder, public popoverCtrl: PopoverController, public loadingController: LoadingController ) {
+    this.categoryData = this.formBuilder.group({
+      category: ['', Validators.required]
+    });
+    this.storage.get('email').then((email) => {
+      if (email == null) {
+        console.log(email);
+        this.navCtrl.push(EmailPage);
+      } else {
+        this.loadCategories();
+      }
+    });
+    
+    
   }
 
   public categoryData: FormGroup;
@@ -29,9 +41,9 @@ export class CategoriesPage {
     let hasPassword = false;
     for (let category of this.categories) {
     	if (category.id == this.categoryData.controls['category'].value) {
-		hasPassword = category.passwd;
-		break;
-	}
+		    hasPassword = category.passwd;
+		    break;
+	    }
     }
 
     if(!hasPassword) {
@@ -48,10 +60,11 @@ export class CategoriesPage {
       let loader = this.loadingController.create({
 	      content: "Зарежда..."
 	    });
+      loader.present();
       this.categoriesService.all()
       .then(data => {
         this.categories = data.categories;  
-	loader.dismiss();
+	      loader.dismiss();
       });
   }
 }

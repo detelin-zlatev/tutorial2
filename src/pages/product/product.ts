@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { Storage } from '@ionic/storage';
 
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 
 import {FormBuilder, FormGroup } from '@angular/forms';
 
@@ -24,7 +24,7 @@ export class ProductPage {
   public addProduct: boolean;
   public finishOrder: boolean;
 
-  constructor(public storage: Storage, public formBuilder: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public ordersService: OrdersService) {
+  constructor(public storage: Storage, public formBuilder: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public ordersService: OrdersService, public loadingController: LoadingController) {
       this.imagesPath = AppSettings.API_ENDPOINT + 'img/upload/';
       this.product = this.navParams.get('product');
       this.orderData = this.formBuilder.group({
@@ -56,12 +56,16 @@ export class ProductPage {
 		console.log('basket: ' + basket);	
 	
 		if (this.finishOrder) {
+			let loader = this.loadingController.create({
+	      content: "Моля изчакайте..."
+	    });
+			loader.present();
 			this.ordersService.placeOrder(basket)
 			      .then(data => {
 					this.storage.set('basket', null).then(() => {
 						console.log('Basket cleared');	
 						this.resetForm();	
-
+						loader.dismiss();
 						let alert = this.alertCtrl.create({
 						      title: 'Изпратена поръчка',
 						      subTitle: 'Вашата поръчка беше изпратена успешно!',
