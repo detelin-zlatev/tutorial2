@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 
 import { Storage } from '@ionic/storage';
 
+import { PhotoViewer } from 'ionic-native';
+
 import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 
 import {FormBuilder, FormGroup } from '@angular/forms';
@@ -36,6 +38,10 @@ export class ProductPage {
       this.addProduct = false;
       this.finishOrder = false;
   }
+
+	zoom() {
+		PhotoViewer.show(this.imagesPath + this.product.filepath);
+	}
 
   doOrder() {
   	this.order = true;
@@ -81,7 +87,7 @@ export class ProductPage {
 
 			        let alert = this.alertCtrl.create({
 				      title: 'Добавен продукт',
-				      subTitle: 'Продукта беше успешно добавен!',
+				      subTitle: 'Продукта беше успешно добавен във Вашата поръчка!',
 				      buttons: ['OK']
 				    });
 				    alert.present();		

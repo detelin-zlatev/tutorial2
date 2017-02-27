@@ -6,7 +6,7 @@
 
 
 <ion-content padding>
-	<img src="{{imagesPath}}{{product.filepath}}"/>
+	<img src="{{imagesPath}}{{product.filepath}}" (click)="zoom()"/>
 
 	<div no-padding>
     		<button ion-button color="purple" block (click)="doOrder()" icon-left><ion-icon name='basket'></ion-icon>Поръчай</button>
@@ -28,13 +28,13 @@
 	      </ion-item>
 		
               <div no-padding *ngIf="!finishOrder && order">
-		  <button ion-button block type="submit">Добави продукт</button>
+		  <button ion-button block type="submit" icon-left><ion-icon name='add'></ion-icon>Добави в количката</button>
 	      </div>
 	      <div no-padding *ngIf="!finishOrder && order">
-		  <button ion-button block (click)="doFinish()">Приключи поръчката</button>
+		  <button ion-button block (click)="doFinish()" icon-left><ion-icon name='checkmark-circle-outline'></ion-icon>Приключи поръчката</button>
 	      </div>
               <div no-padding *ngIf="finishOrder">
-		  <button ion-button block type="submit">Изпрати</button>
+		  <button ion-button block type="submit" icon-left><ion-icon name='send'></ion-icon>Изпрати</button>
 	      </div>
       </form>
 </ion-content>

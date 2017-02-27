@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavController, NavParams, ViewController} from 'ionic-angular';
+import { NavController, NavParams, ViewController, LoadingController} from 'ionic-angular';
 
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
@@ -21,7 +21,7 @@ export class PasswordPage {
   submitAttempt: boolean;
   loginValid: boolean;
 
-  constructor(private formBuilder: FormBuilder, public categoriesService: CategoriesService, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
+  constructor(private formBuilder: FormBuilder, public categoriesService: CategoriesService, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public loadingController: LoadingController) {
 	    this.passwordData = this.formBuilder.group({
         password: ['', Validators.required]
       });
@@ -29,10 +29,15 @@ export class PasswordPage {
   }
 
   openCategory() {
+    let loader = this.loadingController.create({
+      content: "Проверка..."
+    });
+    loader.present();
     this.submitAttempt = true;
     this.loginValid = true;
     this.categoriesService.single(this.id, this.passwordData.controls['password'].value)
       .then(data => {
+        loader.dismiss();
         if (data != null) {
             this.viewCtrl.dismiss();
             this.navCtrl.push(CategoryPage, {
