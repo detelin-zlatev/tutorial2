@@ -20,4 +20,13 @@
           <button ion-button color="purple" block type="submit" icon-left><ion-icon name='eye'></ion-icon>Виж продукти</button>
       </div>
 </form>
+
+  <ion-row *ngFor="let product of products; let even=even; let index=index;" padding>
+  	<ion-col width-50 *ngIf="even" (click)="goToProduct(product)">
+		<img src="{{imagesPath}}{{product.filepath}}"/>
+	</ion-col>
+  	<ion-col width-50 *ngIf="even && index < products.length - 1" (click)="goToProduct(products[index + 1])">
+		<img src="{{imagesPath}}{{products[index + 1].filepath}}"/>
+	</ion-col>
+  </ion-row>
 </ion-content>

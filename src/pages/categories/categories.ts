@@ -8,9 +8,12 @@ import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import {CategoryPage} from '../category/category';
 import {PasswordPage} from '../password/password';
+import {ProductPage} from '../product/product'
 import {EmailPage} from '../email/email';
 
 import {CategoriesService} from '../../providers/categories-service';
+
+import {AppSettings} from '../../appSettings';
 
 @Component({
   selector: 'page-categories',
@@ -19,6 +22,7 @@ import {CategoriesService} from '../../providers/categories-service';
 })
 export class CategoriesPage {
   constructor(public storage: Storage, public navCtrl: NavController, public categoriesService: CategoriesService, private formBuilder: FormBuilder, public popoverCtrl: PopoverController, public loadingController: LoadingController ) {
+    this.imagesPath = AppSettings.API_ENDPOINT + 'img/upload/';
     this.categoryData = this.formBuilder.group({
       category: ['', Validators.required]
     });
@@ -36,6 +40,8 @@ export class CategoriesPage {
 
   public categoryData: FormGroup;
   public categories: any;
+  public products: any;
+  public imagesPath: string;
 
   openCategory() {
     let hasPassword = false;
@@ -56,6 +62,10 @@ export class CategoriesPage {
     }
   }
 
+  goToProduct(product: any) {
+  	this.navCtrl.push(ProductPage, {product: product});	
+  }
+
   loadCategories() {
       let loader = this.loadingController.create({
 	      content: "Зарежда..."
@@ -64,6 +74,7 @@ export class CategoriesPage {
       this.categoriesService.all()
       .then(data => {
         this.categories = data.categories;  
+	this.products = data.products;  
 	      loader.dismiss();
       });
   }
