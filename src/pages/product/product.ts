@@ -12,6 +12,8 @@ import {OrdersService} from '../../providers/orders-service';
 
 import {AppSettings} from '../../appSettings';
 
+import {CategoriesPage} from '../categories/categories'
+
 @Component({
   selector: 'page-product',
   templateUrl: 'product.html',
@@ -51,12 +53,22 @@ export class ProductPage {
   	this.finishOrder = true;
   }
 
+  goToCategories() {
+	this.order = false;
+        this.addProduct = false;
+        this.finishOrder = false;
+	this.navCtrl.push(CategoriesPage);
+ }
+
   completeOrder() {
 	this.storage.get('basket').then((basket) => {
-		if (basket == null) {
-			basket = [[this.product.id, this.orderData.controls['orderText'].value, this.orderData.controls['orderName'].value, this.orderData.controls['orderPhone'].value]];	
-		} else {
-			basket.push([this.product.id, this.orderData.controls['orderText'].value, this.orderData.controls['orderName'].value, this.orderData.controls['orderPhone'].value]);			
+		if (!this.finishOrder) {		
+			if (basket == null) {
+				basket = [[this.product.id, this.orderData.controls['orderText'].value, this.orderData.controls['orderName'].value, this.orderData.controls['orderPhone'].value]];	
+			} else {
+				basket.push([this.product.id, this.orderData.controls['orderText'].value, this.orderData.controls['orderName'].value, this.orderData.controls['orderPhone'].value]);			
+			}
+			this.addProduct = true;	
 		}
 		
 		console.log('basket: ' + basket);	
@@ -83,14 +95,15 @@ export class ProductPage {
 		} else {
 			this.storage.set('basket', basket).then(() => {
 				console.log('Basket updated');	
-				this.resetForm(); 
+				//this.resetForm(); 
 
 			        let alert = this.alertCtrl.create({
 				      title: 'Добавен продукт',
 				      subTitle: 'Продукта беше успешно добавен във Вашата поръчка!',
 				      buttons: ['OK']
 				    });
-				    alert.present();		
+				    alert.present();	
+				console.log('this.addProduct22: ' + this.addProduct);	
 			});
 		}
 	});	
