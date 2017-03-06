@@ -8,6 +8,7 @@ import {AppSettings} from '../appSettings';
 export class EmailsService {
 
   public status: boolean;
+  public statusToken: boolean;
   
   constructor(public http: Http) {
     console.log('EmailsService Provider');
@@ -37,4 +38,28 @@ export class EmailsService {
 			});
 	}
 
+
+
+  addDeviceToken(token: string) {
+    
+		if (this.statusToken) {
+			return Promise.resolve(this.statusToken);
+		}
+
+	  return new Promise(resolve => {
+			let headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json' });
+			let options = new RequestOptions({ headers: headers });
+
+			let body = JSON.stringify({token: token});
+
+			console.log(body);
+
+			this.http.post(AppSettings.API_ENDPOINT + 'emails/addDeviceToken' , body, options)
+					.map(res => res.json())
+					.subscribe(data => {
+						this.statusToken = data;
+						resolve(this.statusToken);
+					});
+			});
+	}
 }
