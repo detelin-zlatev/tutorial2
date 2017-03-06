@@ -24,6 +24,7 @@ export class ProductPage {
   public product: any;
   public imagesPath: string;
   public orderData: FormGroup;
+	public orderDataDetails: FormGroup;
   public order: boolean;
   public addProduct: boolean;
   public finishOrder: boolean;
@@ -32,7 +33,9 @@ export class ProductPage {
       this.imagesPath = AppSettings.API_ENDPOINT + 'img/upload/';
       this.product = this.navParams.get('product');
       this.orderData = this.formBuilder.group({
-        orderText: [''],
+        orderText: ['']
+      });
+			this.orderDataDetails = this.formBuilder.group({
         orderName: [''],
         orderPhone: ['']
       });
@@ -64,24 +67,24 @@ export class ProductPage {
 	this.storage.get('basket').then((basket) => {
 		if (!this.finishOrder) {		
 			if (basket == null) {
-				basket = [[this.product.id, this.orderData.controls['orderText'].value, this.orderData.controls['orderName'].value, this.orderData.controls['orderPhone'].value]];	
+				basket = [[this.product.id, this.orderData.controls['orderText'].value, '', '']];	
 			} else {
-				basket.push([this.product.id, this.orderData.controls['orderText'].value, this.orderData.controls['orderName'].value, this.orderData.controls['orderPhone'].value]);			
+				basket.push([this.product.id, this.orderData.controls['orderText'].value, '', '']);			
 			}
 			this.addProduct = true;	
 		}
 		
-		console.log('basket: ' + basket);	
-	
+		
 		if (this.finishOrder) {
 			let loader = this.loadingController.create({
 	      content: "Моля изчакайте..."
 	    });
 			loader.present();
+			basket[basket.length - 1][2] = this.orderDataDetails.controls['orderName'].value;
+			basket[basket.length - 1][3] = this.orderDataDetails.controls['orderPhone'].value;
 			this.ordersService.placeOrder(basket)
 			      .then(data => {
 					this.storage.set('basket', null).then(() => {
-						console.log('Basket cleared');	
 						this.resetForm();	
 						loader.dismiss();
 						let alert = this.alertCtrl.create({
@@ -94,16 +97,12 @@ export class ProductPage {
 			      });
 		} else {
 			this.storage.set('basket', basket).then(() => {
-				console.log('Basket updated');	
-				//this.resetForm(); 
-
-			        let alert = this.alertCtrl.create({
+				      let alert = this.alertCtrl.create({
 				      title: 'Добавен продукт',
 				      subTitle: 'Продукта беше успешно добавен във Вашата поръчка!',
 				      buttons: ['OK']
 				    });
 				    alert.present();	
-				console.log('this.addProduct22: ' + this.addProduct);	
 			});
 		}
 	});	
@@ -112,8 +111,10 @@ export class ProductPage {
 
   resetForm() {
 	this.orderData.setValue({
-          orderText: '',
-	  orderName: '',
+          orderText: ''
+        });
+				this.orderDataDetails.setValue({
+   	orderName: '',
 	  orderPhone: '',
         });
 	this.order = false;

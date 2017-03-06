@@ -2,7 +2,7 @@
   <div padding>
     <button ion-button color="purple" block (click)="goToHome()" icon-left><ion-icon name='arrow-back'></ion-icon> Избор на категория</button>
   </div>
-  <ion-row *ngFor="let product of products; let even=even; let index=index;" padding>
+  <ion-row *ngFor="let product of products; let even=even; let index=index;">
   	<ion-col width-50 *ngIf="even" (click)="goToProduct(product)">
 		<img src="{{imagesPath}}{{product.filepath}}"/>
 	</ion-col>
