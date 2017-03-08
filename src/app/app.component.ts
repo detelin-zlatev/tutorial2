@@ -1,11 +1,12 @@
 import { Component, ViewChild} from '@angular/core';
 
-import { Platform, AlertController, Nav} from 'ionic-angular';
+import { Platform, AlertController, Nav, PopoverController} from 'ionic-angular';
 
 import { StatusBar, Splashscreen, Push } from 'ionic-native';
 
 import { CategoriesPage } from '../pages/categories/categories';
-import { ProductPage } from '../pages/product/product';
+import { CategoryPage } from '../pages/category/category';
+import { PasswordPage } from '../pages/password/password';
 
 import {EmailsService} from '../providers/emails-service';
 
@@ -16,11 +17,13 @@ import {EmailsService} from '../providers/emails-service';
 })
 export class MyApp {
 
+
   @ViewChild(Nav) nav: Nav;
   rootPage: any = CategoriesPage;
 
   constructor(public platform: Platform,
               public alertCtrl: AlertController,
+	      public popoverCtrl: PopoverController,
 	      public emailService: EmailsService) {
     this.initializeApp();
   }
@@ -41,6 +44,7 @@ export class MyApp {
       console.warn("Push notifications not initialized. Cordova is not available - Run in physical device");
       return;
     }
+
     let push = Push.init({
       android: {
         senderID: "869504917457",
@@ -65,16 +69,15 @@ export class MyApp {
       if (data.additionalData.foreground) {
         // if application open, show popup
         let confirmAlert = this.alertCtrl.create({
-          title: 'Нов продукт',
-          message: data.message,
+          title: 'Нови продукти',
+          message: data.title,
           buttons: [{
             text: 'Пропусни',
             role: 'cancel'
           }, {
             text: 'Виж',
             handler: () => {
-              //TODO: Your logic here
-              self.nav.push(ProductPage, {id: data.message});
+	      self.openCategory(data.message);
             }
           }]
         });
@@ -82,12 +85,30 @@ export class MyApp {
       } else {
         //if user NOT using app and push notification comes
         //TODO: Your logic on click of push notification directly
-        self.nav.push(ProductPage, {id: data.message});
+        self.openCategory(data.message);
         console.log("Push notification clicked");
       }
     });
     push.on('error', (e) => {
       console.log(e.message);
     });
+  }
+
+
+  openCategory(category: string) {
+    let categoryData = category.split("#");
+    let categoryId = categoryData[0];
+    let hasPassword = categoryData[1];
+
+    if(!hasPassword) {
+	console.log('Without password');
+    	this.nav.push(CategoryPage, {
+    	   categoryId: categoryId
+    	});
+    } else {
+      console.log('With password');
+      let passPopover = this.popoverCtrl.create(PasswordPage, {id: categoryId});
+      passPopover.present();
+    }
   }
 }
