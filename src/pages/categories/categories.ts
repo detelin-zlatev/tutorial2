@@ -9,7 +9,7 @@ import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import {CategoryPage} from '../category/category';
 import {PasswordPage} from '../password/password';
 import {ProductPage} from '../product/product'
-import {EmailPage} from '../email/email';
+//import {EmailPage} from '../email/email';
 
 import {CategoriesService} from '../../providers/categories-service';
 
@@ -26,14 +26,14 @@ export class CategoriesPage {
     this.categoryData = this.formBuilder.group({
       category: ['', Validators.required]
     });
-    this.storage.get('email').then((email) => {
-      if (email == null) {
-        console.log(email);
-        this.navCtrl.push(EmailPage);
-      } else {
+    //this.storage.get('email').then((email) => {
+    //  if (email == null) {
+    //    console.log(email);
+    //    this.navCtrl.push(EmailPage);
+    //  } else {
         this.loadCategories();
-      }
-    });
+    //  }
+    //});
     
     
   }

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.zlatevsoft.catalog" version="0.0.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Алина 2013</name>
-    <description>Алина 2013</description>
+<widget id="com.zlatevsoft.catalog" version="0.0.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Alina 2013</name>
+    <description>Alina 2013</description>
     <author email="contact@zlatevsoft.com" href="http://zlatevsoft.com/">ZlatevSoft Team</author>
     <content src="index.html" />
     <access origin="*" />
@@ -48,7 +48,7 @@
     <plugin name="cordova-sqlite-storage" spec="~2.0.2" />
     <icon src="resources\android\icon\drawable-xhdpi-icon.png" />
     <plugin name="com-sarriaroman-photoviewer" spec="~1.1.10" />
-    <plugin name="phonegap-plugin-push" spec="~1.9.4">
+    <plugin name="phonegap-plugin-push" spec="~1.8.2">
         <variable name="SENDER_ID" value="869504917457" />
     </plugin>
 </widget>
