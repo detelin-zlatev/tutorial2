@@ -40,7 +40,7 @@ export class EmailsService {
 
 
 
-  addDeviceToken(token: string) {
+  addDeviceToken(token: string, ios: boolean) {
     
 		if (this.statusToken) {
 			return Promise.resolve(this.statusToken);
@@ -50,7 +50,7 @@ export class EmailsService {
 			let headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json' });
 			let options = new RequestOptions({ headers: headers });
 
-			let body = JSON.stringify({token: token});
+			let body = JSON.stringify({token: token, ios: ios});
 
 			console.log(body);
 

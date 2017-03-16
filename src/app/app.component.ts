@@ -2,7 +2,7 @@ import { Component, ViewChild} from '@angular/core';
 
 import { Platform, AlertController, Nav, PopoverController} from 'ionic-angular';
 
-import { StatusBar, Splashscreen, Push } from 'ionic-native';
+import { StatusBar, Splashscreen, Push} from 'ionic-native';
 
 import { CategoriesPage } from '../pages/categories/categories';
 import { CategoryPage } from '../pages/category/category';
@@ -21,6 +21,8 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
   rootPage: any = CategoriesPage;
 
+  private ios: boolean = false;
+
   constructor(public platform: Platform,
               public alertCtrl: AlertController,
 	      public popoverCtrl: PopoverController,
@@ -32,6 +34,7 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+      this.ios = this.platform.is('ios');
       StatusBar.styleDefault();
       Splashscreen.hide();
       this.initPushNotification();
@@ -60,7 +63,7 @@ export class MyApp {
 
     push.on('registration', (data) => {
       console.log("device token ->", data.registrationId);
-      this.emailService.addDeviceToken(data.registrationId);
+      this.emailService.addDeviceToken(data.registrationId, this.ios);
     });
     push.on('notification', (data) => {
       console.log('message', data.message);
@@ -77,7 +80,8 @@ export class MyApp {
           }, {
             text: 'Виж',
             handler: () => {
-	      self.openCategory(data.message);
+	      let json = JSON.parse(JSON.stringify(data.additionalData));
+	      self.openCategory(json.idNumber);
             }
           }]
         });
@@ -85,7 +89,8 @@ export class MyApp {
       } else {
         //if user NOT using app and push notification comes
         //TODO: Your logic on click of push notification directly
-        self.openCategory(data.message);
+	let json = JSON.parse(JSON.stringify(data.additionalData));
+        self.openCategory(json.idNumber);
         console.log("Push notification clicked");
       }
     });
