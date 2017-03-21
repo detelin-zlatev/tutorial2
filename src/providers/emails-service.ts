@@ -54,7 +54,7 @@ export class EmailsService {
 
 			console.log(body);
 
-			this.http.post(AppSettings.API_ENDPOINT + 'emails/addDeviceToken' , body, options)
+			this.http.post(AppSettings.API_ENDPOINT + 'devices/addDeviceToken' , body, options)
 					.map(res => res.json())
 					.subscribe(data => {
 						this.statusToken = data;
