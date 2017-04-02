@@ -2,7 +2,7 @@ import { Component, ViewChild} from '@angular/core';
 
 import { Platform, AlertController, Nav, PopoverController} from 'ionic-angular';
 
-import { StatusBar, Splashscreen, Push} from 'ionic-native';
+import { StatusBar, Splashscreen, Push, Badge} from 'ionic-native';
 
 import { CategoriesPage } from '../pages/categories/categories';
 import { CategoryPage } from '../pages/category/category';
@@ -63,14 +63,18 @@ export class MyApp {
 
     push.on('registration', (data) => {
       console.log("device token ->", data.registrationId);
-      this.emailService.addDeviceToken(data.registrationId, this.ios);
+      if (this.ios) {
+        this.emailService.addDeviceToken(data.registrationId, this.ios);
+      }
     });
     push.on('notification', (data) => {
       console.log('message', data.message);
+      Badge.clear();
       let self = this;
       //if user using app and push notification comes
       if (data.additionalData.foreground) {
         // if application open, show popup
+        let json = JSON.parse(JSON.stringify(data.additionalData));
         let confirmAlert = this.alertCtrl.create({
           title: 'Нови продукти',
           message: data.title,
@@ -80,7 +84,7 @@ export class MyApp {
           }, {
             text: 'Виж',
             handler: () => {
-	      let json = JSON.parse(JSON.stringify(data.additionalData));
+	      
 	      self.openCategory(json.idNumber);
             }
           }]
@@ -89,7 +93,7 @@ export class MyApp {
       } else {
         //if user NOT using app and push notification comes
         //TODO: Your logic on click of push notification directly
-	let json = JSON.parse(JSON.stringify(data.additionalData));
+	      let json = JSON.parse(JSON.stringify(data.additionalData));
         self.openCategory(json.idNumber);
         console.log("Push notification clicked");
       }

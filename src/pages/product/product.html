@@ -6,7 +6,7 @@
 
 
 <ion-content padding>
-	<img src="{{imagesPath}}{{product.filepath}}" (click)="zoom()" *ngIf="!addProduct"/>
+	<img src="{{imagesPath}}{{product.filepath}}" (click)="zoom()" *ngIf="!addProduct" tappable/>
 
 	<div no-padding>
     		<button ion-button color="purple" block (click)="doOrder()" icon-left *ngIf="!order"><ion-icon name='basket'></ion-icon>Поръчай</button>
