@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Абонамент за нови продукти</ion-title>
+    <ion-title>Вашият телефонен номер</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -8,18 +8,18 @@
 <ion-content>
 <form [formGroup]="emailData" (ngSubmit)="addEmail()">
     <div padding>
-      За да получавате информация относно нови продукти моля въведете ваш email.
+      За да можете да правите поръчки и да можем да се свържем с Вас при такава, моля въведете вашият телефонен номер.
     </div>
     <ion-item>
-        <ion-label floating>Email</ion-label>
+        <ion-label floating>Телефон</ion-label>
         <ion-input type="text" formControlName="email" [class.invalid]="!emailData.controls.email.valid  && (emailData.controls.email.dirty || submitAttempt)"></ion-input>
       </ion-item>
       <ion-item *ngIf="!emailData.controls.email.valid  && (emailData.controls.email.dirty || submitAttempt)">
-        <div class="invalid-message">Въведете email</div>
+        <div class="invalid-message">Въведете телефон</div>
       </ion-item>
   
       <div padding>
-          <button ion-button block type="submit" icon-left><ion-icon name='mail'></ion-icon>Абонирай се</button>
+          <button ion-button block type="submit">Запази</button>
       </div>
 </form>
 </ion-content>

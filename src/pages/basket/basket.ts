@@ -15,11 +15,11 @@ import {AppSettings} from '../../appSettings';
 import {CategoriesPage} from '../categories/categories'
 
 @Component({
-  selector: 'page-product',
-  templateUrl: 'product.html',
+  selector: 'page-basket',
+  templateUrl: 'basket.html',
   providers: [OrdersService]
 })
-export class ProductPage {
+export class BasketPage {
 
   public product: any;
   public imagesPath: string;
