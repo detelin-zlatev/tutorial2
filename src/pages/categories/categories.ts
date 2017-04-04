@@ -10,6 +10,7 @@ import {CategoryPage} from '../category/category';
 import {PasswordPage} from '../password/password';
 import {ProductPage} from '../product/product'
 import {EmailPage} from '../email/email';
+import {BasketPage} from '../basket/basket';
 
 import {CategoriesService} from '../../providers/categories-service';
 
@@ -33,7 +34,7 @@ export class CategoriesPage {
         this.loadCategories();
       }
     });
-    
+    this.storage.get('basket').then((basket) => {if (basket) {this.basketSize = basket.length; } else {this.basketSize = 0;}});  
     
   }
 
@@ -41,6 +42,7 @@ export class CategoriesPage {
   public categories: any;
   public products: any;
   public imagesPath: string;
+  public basketSize: number;
 
   openCategory() {
     let hasPassword = false;
@@ -63,6 +65,10 @@ export class CategoriesPage {
 
   goToProduct(product: any) {
   	this.navCtrl.push(ProductPage, {product: product});	
+  }
+
+  goToBasket() {
+  	this.navCtrl.push(BasketPage);	
   }
 
   loadCategories() {

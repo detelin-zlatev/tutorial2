@@ -13,6 +13,7 @@ import {OrdersService} from '../../providers/orders-service';
 import {AppSettings} from '../../appSettings';
 
 import {CategoriesPage} from '../categories/categories'
+import {BasketPage} from '../basket/basket';
 
 @Component({
   selector: 'page-product',
@@ -28,10 +29,12 @@ export class ProductPage {
   public order: boolean;
   public addProduct: boolean;
   public finishOrder: boolean;
+  public basketSize: number;
 
   constructor(public storage: Storage, public formBuilder: FormBuilder, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public ordersService: OrdersService, public loadingController: LoadingController) {
       this.imagesPath = AppSettings.API_ENDPOINT + 'img/upload/';
       this.product = this.navParams.get('product');
+      this.storage.get('basket').then((basket) => {if (basket) {this.basketSize = basket.length; } else {this.basketSize = 0;}});  
       this.orderData = this.formBuilder.group({
         orderText: ['']
       });
@@ -54,6 +57,7 @@ export class ProductPage {
 
   doFinish() {
   	this.finishOrder = true;
+	this.goToBasket();
   }
 
   goToCategories() {
@@ -67,34 +71,17 @@ export class ProductPage {
 	this.storage.get('basket').then((basket) => {
 		if (!this.finishOrder) {		
 			if (basket == null) {
-				basket = [[this.product.id, this.orderData.controls['orderText'].value, '', '']];	
+				basket = [[this.product, this.orderData.controls['orderText'].value, '', '']];	
 			} else {
-				basket.push([this.product.id, this.orderData.controls['orderText'].value, '', '']);			
+				basket.push([this.product, this.orderData.controls['orderText'].value, '', '']);			
 			}
 			this.addProduct = true;	
+			this.basketSize++;
 		}
 		
 		
 		if (this.finishOrder) {
-			let loader = this.loadingController.create({
-	      content: "Моля изчакайте..."
-	    });
-			loader.present();
-			basket[basket.length - 1][2] = 'phone';
-			basket[basket.length - 1][3] = 'phone';
-			this.ordersService.placeOrder(basket)
-			      .then(data => {
-					this.storage.set('basket', null).then(() => {
-						this.resetForm();	
-						loader.dismiss();
-						let alert = this.alertCtrl.create({
-						      title: 'Изпратена поръчка',
-						      subTitle: 'Вашата поръчка беше изпратена успешно!',
-						      buttons: ['OK']
-						    });
-						    alert.present();	
-					});
-			      });
+			
 		} else {
 			this.storage.set('basket', basket).then(() => {
 				      let alert = this.alertCtrl.create({
@@ -120,6 +107,14 @@ export class ProductPage {
 	this.order = false;
       	this.addProduct = false;
       	this.finishOrder = false;
+  }
+
+      goToBasket() {
+  	this.navCtrl.push(BasketPage);	
+  }
+
+    goBack() {
+  	this.navCtrl.pop();	
   }
 
 }

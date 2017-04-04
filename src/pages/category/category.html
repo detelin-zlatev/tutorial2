@@ -1,7 +1,17 @@
 <ion-content>
-  <div padding>
-    <button ion-button color="purple" block (click)="goToHome()" icon-left><ion-icon name='arrow-back'></ion-icon> Избор на категория</button>
-  </div>
+<ion-row>
+	<ion-col width-70>
+		<button ion-button color="purple" (click)="goToHome()" icon-left><ion-icon name='arrow-back'></ion-icon> Избор на категория</button>
+	</ion-col>
+
+    <ion-col width-30 text-right>
+      <button ion-button  color="dark" icon-only clear (click)="goToBasket()">
+        <ion-icon name="basket" style="padding: 0.2em;"></ion-icon>
+	<ion-badge color="secondary" item-right *ngIf="basketSize > 0" style="padding: 3px 3px;">{{basketSize}}</ion-badge>	
+      </button>      
+    </ion-col>
+</ion-row>	
+
   <ion-row *ngFor="let product of products; let even=even; let index=index;">
   	<ion-col width-50 *ngIf="even" (click)="goToProduct(product)">
 		<img src="{{imagesPath}}{{product.filepath}}"/>
