@@ -110,7 +110,7 @@ export class ProductPage {
   }
 
       goToBasket() {
-  	this.navCtrl.push(BasketPage);	
+  	this.navCtrl.push(BasketPage, { "parentPage": this });	
   }
 
     goBack() {

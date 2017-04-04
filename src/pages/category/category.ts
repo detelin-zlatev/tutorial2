@@ -66,6 +66,6 @@ public basketSize: number;
   }
 
     goToBasket() {
-  	this.navCtrl.push(BasketPage);	
+  	this.navCtrl.push(BasketPage, { "parentPage": this });	
   }
 }

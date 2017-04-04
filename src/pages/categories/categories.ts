@@ -68,7 +68,7 @@ export class CategoriesPage {
   }
 
   goToBasket() {
-  	this.navCtrl.push(BasketPage);	
+  	this.navCtrl.push(BasketPage, { "parentPage": this });	
   }
 
   loadCategories() {
