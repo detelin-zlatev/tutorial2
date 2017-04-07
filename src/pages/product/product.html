@@ -1,11 +1,18 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>Подробности за продукт</ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-content>
+	<ion-row>
+		<ion-col width-70>
+			<button ion-button color="purple" (click)="goBack()" icon-left><ion-icon name='arrow-back'></ion-icon></button>
+		</ion-col>
 
-
-<ion-content padding>
+	    <ion-col width-30 text-right>
+	      <button ion-button  color="dark" icon-only clear (click)="goToBasket()">
+		<ion-icon name="basket" style="padding: 0.2em;"></ion-icon>
+		<ion-badge color="secondary" item-right *ngIf="basketSize > 0" style="padding: 3px 3px;">{{basketSize}}</ion-badge>	
+	      </button>      
+	    </ion-col>
+	</ion-row>	
+	
+<div padding>
 	<img src="{{imagesPath}}{{product.filepath}}" (click)="zoom()" *ngIf="!addProduct" tappable/>
 
 	<div no-padding>
@@ -27,19 +34,5 @@
 	<div no-padding *ngIf="addProduct">
 		<button ion-button block (click)="doFinish()" icon-left><ion-icon name='checkmark-circle-outline'></ion-icon>Приключи поръчката</button> 
 	</div>
-	<form [formGroup]="orderDataDetails" (ngSubmit)="completeOrder()" *ngIf="finishOrder">
-	      <ion-item>
-			<ion-label stacked>Име</ion-label>
-			<ion-input type="text" formControlName="orderName"></ion-input>
-	      </ion-item>
-
-            <ion-item>
-			<ion-label stacked>Телефон</ion-label>
-			<ion-input type="text" formControlName="orderPhone"></ion-input>
-	      </ion-item>
-
-            <div no-padding *ngIf="finishOrder">
-		  	<button ion-button block type="submit" icon-left><ion-icon name='send'></ion-icon>Изпрати</button>
-	      </div>
-      </form>
+</div>
 </ion-content>

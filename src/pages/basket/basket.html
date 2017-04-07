@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Количка</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+	<ion-card *ngFor="let item of basket; let index=index;">
+		<ion-row>
+		  	<ion-col width-30 (click)="goToProduct(item[0])">
+				<img src="{{imagesPath}}{{item[0].filepath}}"/>
+			</ion-col>
+		  	<ion-col width-70 text-right>
+				<button ion-button icon-only (click)="deleteFromBasket(index)">
+				<ion-icon name="remove"></ion-icon>
+			      </button>
+			</ion-col>
+  		</ion-row>
+		<p padding *ngIf="item[1] != ''">
+			{{item[1]}}
+		</p>
+	</ion-card>
+
+        <div padding *ngIf="basket && basket.length > 0">
+		  	<button ion-button block icon-left (click)="completeOrder()"><ion-icon name='send'></ion-icon>Изпрати</button>
+	</div>
+	<div padding *ngIf="!(basket && basket.length > 0)">
+		  	Вашата кошница е празна!
+	</div>
+</ion-content>

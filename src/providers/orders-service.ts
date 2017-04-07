@@ -24,16 +24,23 @@ export class OrdersService {
 		let headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
 
-		let body = JSON.stringify(order);
+		let processedOrder = [[]];
+
+		for (let i = 0; i < order.length; i++) {
+			processedOrder.push([order[i][0].id, order[i][1], order[i][2], order[i][3]]);		
+		}
+
+		let body = JSON.stringify(processedOrder);
 
 		console.log(body);
 
-		this.http.post(AppSettings.API_ENDPOINT + 'orders/placeOrder' , body, options)
-		    .map(res => res.json())
-		    .subscribe(data => {
-		      this.orderStatus = data;
+		//this.http.post(AppSettings.API_ENDPOINT + 'orders/placeOrder' , body, options)
+		//    .map(res => res.json())
+		//    .subscribe(data => {
+		//      this.orderStatus = data;
+			this.orderStatus = true;
 		      resolve(this.orderStatus);
-		    });
+		//    });
 	    });
 	}
 

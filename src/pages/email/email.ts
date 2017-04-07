@@ -18,26 +18,23 @@ export class EmailPage {
   public submitAttempt: boolean;
 
   constructor(public storage: Storage, public navCtrl: NavController, public emailService: EmailsService, private formBuilder: FormBuilder, public loadingController: LoadingController ) {
-    let emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$';
+    //let emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$';
     
     this.emailData = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.pattern(emailRegex)]]
+      email: ['', [Validators.required]]
     });
   }
 
   addEmail() {
     this.submitAttempt = true;
     let loader = this.loadingController.create({
-      content: "Регистрация..."
+      content: "Зарежда..."
     });
     loader.present();
 
-    this.emailService.addEmail(this.emailData.controls['email'].value)
-			  .then(data => {
-					this.storage.set('email', this.emailData.controls['email'].value).then(() => {
-						loader.dismiss();
-            this.navCtrl.pop();
-					});
-			  });
+    this.storage.set('phone', this.emailData.controls['email'].value).then(() => {
+	loader.dismiss();
+        this.navCtrl.pop();
+    });
   }
 }

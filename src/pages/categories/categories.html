@@ -1,11 +1,18 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>Категории</ion-title>
-  </ion-navbar>
-</ion-header>
-
-
 <ion-content>
+
+<ion-row>
+	<ion-col width-70>
+		<h4 style="margin-top: 1.0rem;">Категории дрехи</h4>
+	</ion-col>
+
+    <ion-col width-30 text-right>
+      <button ion-button  color="dark" icon-only clear (click)="goToBasket()">
+        <ion-icon name="basket" style="padding: 0.2em;"></ion-icon>
+	<ion-badge color="secondary" item-right *ngIf="basketSize > 0" style="padding: 3px 3px;">{{basketSize}}</ion-badge>	
+      </button>      
+    </ion-col>
+</ion-row>	
+
 <form [formGroup]="categoryData" (ngSubmit)="openCategory()">
   <ion-list>
     <ion-item>

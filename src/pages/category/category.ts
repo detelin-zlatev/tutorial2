@@ -6,6 +6,9 @@ import {CategoriesService} from '../../providers/categories-service';
 
 import {ProductPage} from '../product/product'
 import {CategoriesPage} from '../categories/categories'
+import {BasketPage} from '../basket/basket';
+
+import { Storage } from '@ionic/storage';
 
 import {AppSettings} from '../../appSettings';
 
@@ -20,8 +23,9 @@ export class CategoryPage {
   public imagesPath: string;
   public page: number;
   public size: number;
+public basketSize: number;
 
-  constructor(public categoriesService: CategoriesService, public navCtrl: NavController, public navParams: NavParams, public loadingController: LoadingController) {
+  constructor(public storage: Storage, public categoriesService: CategoriesService, public navCtrl: NavController, public navParams: NavParams, public loadingController: LoadingController) {
     this.page = 1;
     this.size = 6;
     let loader = this.loadingController.create({
@@ -30,6 +34,7 @@ export class CategoryPage {
     loader.present();
 
     this.imagesPath = AppSettings.API_ENDPOINT + 'img/upload/';
+    this.storage.get('basket').then((basket) => {if (basket) {this.basketSize = basket.length; } else {this.basketSize = 0;}});  
     this.categoriesService.listProducts(this.navParams.get('categoryId'), this.page, this.size).then(data => {
           this.products = data.products;
 	  loader.dismiss();
@@ -58,5 +63,9 @@ export class CategoryPage {
 		infiniteScroll.enable(false);
 	  }
 	});
+  }
+
+    goToBasket() {
+  	this.navCtrl.push(BasketPage, { "parentPage": this });	
   }
 }
