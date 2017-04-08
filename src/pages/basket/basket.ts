@@ -57,7 +57,10 @@ export class BasketPage {
 
   deleteFromBasket(index: number) {
 	this.basket.splice(index, 1);
-	this.storage.set('basket', this.basket);	  
+	this.storage.set('basket', this.basket).then(() => {
+		this.navParams.get('parentPage').basketSize--;
+	});
+
   }
 
 }

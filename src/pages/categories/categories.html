@@ -2,7 +2,7 @@
 
 <ion-row>
 	<ion-col width-70>
-		<h4 style="margin-top: 1.0rem;">Категории дрехи</h4>
+		<h4 style="margin-top: 1.0rem;"></h4>
 	</ion-col>
 
     <ion-col width-30 text-right>
@@ -13,27 +13,17 @@
     </ion-col>
 </ion-row>	
 
-<form [formGroup]="categoryData" (ngSubmit)="openCategory()">
-  <ion-list>
-    <ion-item>
-      <ion-label>Избери категория...</ion-label>
-      <ion-select formControlName="category">
-        <ion-option value="{{category.id}}" *ngFor="let category of categories">{{category.name}}</ion-option>
-      </ion-select>
-    </ion-item>
-  </ion-list>
 
-      <div padding>
-          <button ion-button color="purple" block type="submit" icon-left><ion-icon name='eye'></ion-icon>Виж продукти</button>
-      </div>
-</form>
-
-  <ion-row *ngFor="let product of products; let even=even; let index=index;">
-  	<ion-col width-50 *ngIf="even" (click)="goToProduct(product)">
-		<img src="{{imagesPath}}{{product.filepath}}"/>
-	</ion-col>
-  	<ion-col width-50 *ngIf="even && index < products.length - 1" (click)="goToProduct(products[index + 1])">
-		<img src="{{imagesPath}}{{products[index + 1].filepath}}"/>
-	</ion-col>
-  </ion-row>
+	<ion-card *ngFor="let category of categories; let index=index;">
+		<ion-row *ngIf="category.filepath" (click)="openCategory(category.id)" tappable>
+		  	<ion-col width-100>
+				<img src="{{imagesPath}}{{category.filepath}}"/>
+			</ion-col>
+    </ion-row>
+		<ion-row (click)="openCategory(category.id)" tappable>
+      	<ion-col width-100 text-center>
+				{{category.name}}
+			</ion-col>
+  		</ion-row>
+	</ion-card>
 </ion-content>

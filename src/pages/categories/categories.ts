@@ -44,10 +44,10 @@ export class CategoriesPage {
   public imagesPath: string;
   public basketSize: number;
 
-  openCategory() {
+  openCategory(categoryId: number) {
     let hasPassword = false;
     for (let category of this.categories) {
-    	if (category.id == this.categoryData.controls['category'].value) {
+    	if (category.id == categoryId) {
 		    hasPassword = category.passwd;
 		    break;
 	    }
@@ -55,10 +55,10 @@ export class CategoriesPage {
 
     if(!hasPassword) {
     	this.navCtrl.push(CategoryPage, {
-    	   categoryId: this.categoryData.controls['category'].value
+    	   categoryId: categoryId
     	});
     } else {
-      let passPopover = this.popoverCtrl.create(PasswordPage, {id: this.categoryData.controls['category'].value});
+      let passPopover = this.popoverCtrl.create(PasswordPage, {id: categoryId});
       passPopover.present();
     }
   }

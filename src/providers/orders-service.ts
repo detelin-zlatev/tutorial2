@@ -34,13 +34,13 @@ export class OrdersService {
 
 		console.log(body);
 
-		//this.http.post(AppSettings.API_ENDPOINT + 'orders/placeOrder' , body, options)
-		//    .map(res => res.json())
-		//    .subscribe(data => {
-		//      this.orderStatus = data;
+		this.http.post(AppSettings.API_ENDPOINT + 'orders/placeOrder' , body, options)
+		    .map(res => res.json())
+		    .subscribe(data => {
+		      this.orderStatus = data;
 			this.orderStatus = true;
 		      resolve(this.orderStatus);
-		//    });
+		    });
 	    });
 	}
 

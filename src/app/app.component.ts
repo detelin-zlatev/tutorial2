@@ -69,7 +69,9 @@ export class MyApp {
     });
     push.on('notification', (data) => {
       console.log('message', data.message);
-      Badge.clear();
+      if (this.ios) {
+          Badge.clear();
+      }
       let self = this;
       //if user using app and push notification comes
       if (data.additionalData.foreground) {
