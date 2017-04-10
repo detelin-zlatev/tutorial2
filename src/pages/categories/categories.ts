@@ -29,7 +29,7 @@ export class CategoriesPage {
     });
     this.storage.get('phone').then((phone) => {
       if (phone == null) {
-        this.navCtrl.push(EmailPage);
+        this.navCtrl.push(EmailPage, { "parentPage": this });
       } else {
         this.loadCategories();
       }

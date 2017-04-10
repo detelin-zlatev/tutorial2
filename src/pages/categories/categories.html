@@ -14,16 +14,17 @@
 </ion-row>	
 
 
-	<ion-card *ngFor="let category of categories; let index=index;">
-		<ion-row *ngIf="category.filepath" (click)="openCategory(category.id)" tappable>
-		  	<ion-col width-100>
-				<img src="{{imagesPath}}{{category.filepath}}"/>
-			</ion-col>
-    </ion-row>
+	<ion-card *ngFor="let category of categories; let index=index;" style="font-weight: bold; background: #eeeeee; margin-bottom: 25px; box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.80), 0 5px 3px -2px rgba(0, 0, 0, 0.86), 0 3px 6px 0 rgba(0, 0, 0, 0.86)">
 		<ion-row (click)="openCategory(category.id)" tappable>
       	<ion-col width-100 text-center>
 				{{category.name}}
 			</ion-col>
   		</ion-row>
+			<ion-row *ngIf="category.filepath" (click)="openCategory(category.id)" tappable>
+		  	<ion-col width-100>
+				<img src="{{imagesPath}}{{category.filepath}}"/>
+			</ion-col>
+    </ion-row>
+		
 	</ion-card>
 </ion-content>

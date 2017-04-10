@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { Storage } from '@ionic/storage';
 
-import { NavController, LoadingController  } from 'ionic-angular';
+import { NavController, LoadingController, NavParams  } from 'ionic-angular';
 
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
@@ -17,7 +17,7 @@ export class EmailPage {
   public emailData: FormGroup;
   public submitAttempt: boolean;
 
-  constructor(public storage: Storage, public navCtrl: NavController, public emailService: EmailsService, private formBuilder: FormBuilder, public loadingController: LoadingController ) {
+  constructor(public navParams: NavParams, public storage: Storage, public navCtrl: NavController, public emailService: EmailsService, private formBuilder: FormBuilder, public loadingController: LoadingController ) {
     //let emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$';
     
     this.emailData = this.formBuilder.group({
@@ -34,6 +34,7 @@ export class EmailPage {
 
     this.storage.set('phone', this.emailData.controls['email'].value).then(() => {
 	loader.dismiss();
+        this.navParams.get('parentPage').loadCategories();
         this.navCtrl.pop();
     });
   }
