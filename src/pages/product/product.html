@@ -1,16 +1,16 @@
-<ion-content>
-	<ion-row>
-		<ion-col width-70>
-			<button ion-button color="purple" (click)="goBack()" icon-left><ion-icon name='arrow-back'></ion-icon></button>
-		</ion-col>
+<ion-header>
+<ion-toolbar>
+<button ion-button color="purple" (click)="goBack()" icon-left><ion-icon name='arrow-back'></ion-icon> Избор на категория</button>
+<ion-buttons end>
+      <button ion-button  color="dark" icon-only clear (click)="goToBasket()">
+        <ion-icon name="basket" style="padding: 0.2em;"></ion-icon>
+	<ion-badge color="secondary" item-right *ngIf="basketSize > 0" style="padding: 3px 3px;">{{basketSize}}</ion-badge>	
+      </button>  
+</ion-buttons>
+</ion-toolbar>
+</ion-header>
 
-	    <ion-col width-30 text-right>
-	      <button ion-button  color="dark" icon-only clear (click)="goToBasket()">
-		<ion-icon name="basket" style="padding: 0.2em;"></ion-icon>
-		<ion-badge color="secondary" item-right *ngIf="basketSize > 0" style="padding: 3px 3px;">{{basketSize}}</ion-badge>	
-	      </button>      
-	    </ion-col>
-	</ion-row>	
+<ion-content>
 	
 <div padding>
 	<img src="{{imagesPath}}{{product.filepath}}" (click)="zoom()" *ngIf="!addProduct" tappable/>

@@ -1,6 +1,20 @@
+<ion-header>
+<ion-toolbar>
+<!--<button ion-button icon-only color="royal">
+<ion-icon name="search"></ion-icon>
+</button>-->
+<ion-buttons end>
+      <button ion-button  color="dark" icon-only clear (click)="goToBasket()">
+        <ion-icon name="basket" style="padding: 0.2em;"></ion-icon>
+	<ion-badge color="secondary" item-right *ngIf="basketSize > 0" style="padding: 3px 3px;">{{basketSize}}</ion-badge>	
+      </button>  
+</ion-buttons>
+</ion-toolbar>
+</ion-header>
+
 <ion-content>
 
-<ion-row>
+<!--<ion-row>
 	<ion-col width-70>
 		<h4 style="margin-top: 1.0rem;"></h4>
 	</ion-col>
@@ -11,7 +25,7 @@
 	<ion-badge color="secondary" item-right *ngIf="basketSize > 0" style="padding: 3px 3px;">{{basketSize}}</ion-badge>	
       </button>      
     </ion-col>
-</ion-row>	
+</ion-row>	-->
 
 
 	<ion-card *ngFor="let category of categories; let index=index;" style="font-weight: bold; background: #eeeeee; margin-bottom: 25px; box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.80), 0 5px 3px -2px rgba(0, 0, 0, 0.86), 0 3px 6px 0 rgba(0, 0, 0, 0.86)">
